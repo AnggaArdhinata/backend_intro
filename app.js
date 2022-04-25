@@ -5,7 +5,9 @@ const db = require('./src/configs/db')
 const cors = require('cors')
 
 const server = express()
-const PORT = 8080
+
+// eslint-disable-next-line no-undef
+const {APP_PORT} = process.env
 
 server.use(express.urlencoded({extended: false}))
 server.use(express.json())
@@ -15,8 +17,8 @@ server.use('/api/v1',route)
 db.connect().then (() => {
     console.log('Data base connected')
 
-    server.listen(PORT, () => {
-        console.log(`Service run on port: ${PORT}`)
+    server.listen(APP_PORT, () => {
+        console.log(`Service run on port: ${APP_PORT}`)
     })
 }).catch(er => {
     console.log(er);
