@@ -26,15 +26,16 @@ models.getData = function () {
     })
 }
 
-models.addData = function ({name, year, category, price}) {
+models.addData = function ({name, year, category, price, image}) {
    return new Promise ((resolve, reject) => {
      db.query(
-        'INSERT INTO public.movie (name, year, category, price) VALUES($1, $2, $3, $4)',
+        'INSERT INTO public.movie (name, year, category, price, image) VALUES($1, $2, $3, $4, $5)',
         [
            name,
            year,
            category,
-           price
+           price,
+           image
          ])
      .then(() => {
         resolve('Successfully Insert New Data')
@@ -45,12 +46,12 @@ models.addData = function ({name, year, category, price}) {
    })
 }
 
-models.updateData = function ({id, name, year, category, price}) {
+models.updateData = function ({id, name, year, category, price, image}) {
    return new Promise ((resolve, reject) => {
-     db.query('UPDATE public.movie SET name= $2, year= $3, category= $4, price= $5 WHERE movie_id= $1',
-     [id, name, year, category, price])
+     db.query(`UPDATE public.movie SET name= $1, year= $2, category= $3, $4 price= $4 WHERE movie_id= ${id}`,
+     [ name, year, category, price, image])
      .then(() => {
-        resolve('Update data successfully')
+        resolve('Update data Success')
      }) .catch((ers) => {
         reject(ers)
      })

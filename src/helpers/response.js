@@ -40,4 +40,5 @@ function response(res, status, result = ''){
     res.status(status).json(results)
 }
 
+
 module.exports = response

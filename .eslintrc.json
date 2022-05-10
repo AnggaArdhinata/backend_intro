@@ -10,7 +10,8 @@
     },
     "rules": {
         "no-unused-vars":"error",
-        "quotes": ["warn", "single"]
+        "quotes": ["warn", "single"],
+        "no-useless-catch":"false"
         
     }
 }

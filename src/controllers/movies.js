@@ -22,9 +22,14 @@ movies.getAll = async (req, res) => {
 
 movies.Create = async (req, res) => {
     try {
+        let image =''
+        if (req.file !== undefined) {
+            image = req.file.path
+        }
         const {name, year, category, price} = req.body
-        const data = await models.addData({name, year, category, price})
-        res.send({data})
+        const data = await models.addData({name, year, category, price, image})
+        return response(res, 200, data)
+        
     } catch (error) {
         res.send('Failed to Add Data')
     }
@@ -32,8 +37,9 @@ movies.Create = async (req, res) => {
 
 movies.Update = async (req,res) => {
     try {
-        const {id, name, year, category, price} = req.body
-        const data = await models.updateData(id, name, year, category, price)
+        const {name, year, category, price, image} = req.body
+        const {id} = req.params
+        const data = await models.updateData({id, name, year, category, price, image})
         return response(res, 200, data)
     } catch (error) {
         return response(res, 500, error)

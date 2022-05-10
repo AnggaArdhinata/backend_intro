@@ -12,6 +12,7 @@ const {APP_PORT} = process.env
 server.use(express.urlencoded({extended: false}))
 server.use(express.json())
 server.use(cors())
+server.use('/public', express.static('public'))
 server.use('/api/v1',route)
 
 db.connect().then (() => {
