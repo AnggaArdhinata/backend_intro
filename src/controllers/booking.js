@@ -1,44 +1,62 @@
-const models = require('../models/booking')
-const response = require('../helpers/response')
-const booking = {}
+const model = require('../models/booking');
+const booking = {};
 
 booking.getAll = async (req, res) => {
-    try {
-        const data = await models.getData()
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
-    }
-}
+  try {
+    const data = await model.getData();
+    res.send(data);
+  } catch (error) {
+    res.send('Maaf error terjadi');
+  }
+};
 
 booking.Create = async (req, res) => {
-    try {
-        const {booking_id, customer_name, booking_date, total_price, seat_number, amount} = req.body
-        const data = await models.addData({booking_id, customer_name, booking_date, total_price, seat_number, amount})
-        res.send({data})
-    } catch (error) {
-        res.send('Booking Failed')
-    }
-}
+  try {
+    const body = req.body;
+    const tambah = await model.addData(body);
+    res.send(tambah);
+  } catch (error) {
+    res.send('Maaf error terjadi di tes ctrl');
+  }
+};
 
-booking.Update = async (req,res) => {
-    try {
-        const {id, customer_name, booking_date, seat_number, amount} = req.body
-        const data = await models.updateData(id, customer_name, booking_date, seat_number, amount)
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
-    }
-}
+booking.Update = async (req, res) => {
+  try {
+    const body = req.body;
+    const tambah = await model.updateData(body);
+    res.send(tambah);
+  } catch (error) {
+    res.send('Maaf error terjadi di ctrl');
+  }
+};
 
-booking.Delete = async (req,res) => {
-    try {
-        const {id} = req.body
-        const data = await models.deleteData(id)
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
-    }
-}
+booking.Delete = async (req, res) => {
+  try {
+    const body = req.body;
+    const tambah = await model.deleteData(body);
+    res.send(tambah);
+  } catch (error) {
+    res.send('Maaf error terjadi di ctrl');
+  }
+};
 
-module.exports = booking
+// movies.Search = async (req, res) => {
+//   try {
+//     const body = req.body;
+//     const tambah = await model.searchData(body);
+//     res.send(tambah);
+//   } catch (error) {
+//     res.send("Maaf error terjadi di ctrl");
+//   }
+// };
+
+// movies.ShowByNameYear = async (req, res) => {
+//   try {
+//     const tambah = await model.dataByNameYear();
+//     res.send(tambah);
+//   } catch (error) {
+//     res.send("Maaf error terjadi di ctrl");
+//   }
+// };
+
+module.exports = booking;

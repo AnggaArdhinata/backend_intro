@@ -29,11 +29,12 @@ models.getData = function () {
 models.addData = function ({name, year, category, price, image}) {
    return new Promise ((resolve, reject) => {
      db.query(
-        'INSERT INTO public.movie (name, year, category, price, image) VALUES($1, $2, $3, $4, $5)',
+        'INSERT INTO public.movie (name, year, category, desc, price, image) VALUES($1, $2, $3, $4, $5, $6)',
         [
            name,
            year,
            category,
+           desc,
            price,
            image
          ])

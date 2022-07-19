@@ -1,10 +1,10 @@
-const express = require('express')
-const routers = express.Router()
-const ctrl = require('../controllers/booking')
+const express = require('express');
+const routers = express.Router();
+const ctrl = require('../controllers/booking');
 
-routers.get('/', ctrl.getAll)
-routers.post('/', ctrl.Create)
-routers.put('/', ctrl.Update)
-routers.delete('/', ctrl.Delete)
+routers.get('/show', ctrl.getAll);
+routers.post('/add', ctrl.Create);
+routers.put('/update', ctrl.Update);
+routers.delete('/delete', ctrl.Delete);
 
-module.exports = routers
+module.exports = routers;

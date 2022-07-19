@@ -1,59 +1,82 @@
-const models = require('../models/movies')
-const response = require('../helpers/response')
-const movies = {}
-
-movies.getByName = async (req, res) => {
-    try {
-        const data = await models.getDataName()
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
-    }
-}
+const model = require('../models/movies');
+const respone = require('../helpers/response');
+const movies = {};
 
 movies.getAll = async (req, res) => {
-    try {
-        const data = await models.getData()
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
-    }
-}
+  try {
+    const data = await model.getData();
+    return respone(res, 200, data);
+  } catch (error) {
+    return respone(res, 500, error);
+  }
+};
+
+movies.getPage = async (req, res) => {
+  try {
+    const par = req.query;
+    // const body = req.body;
+    const data = await model.getDataPage(par);
+    res.send(data);
+  } catch (error) {
+    res.send('Maaf error terjadi');
+  }
+};
 
 movies.Create = async (req, res) => {
-    try {
-        let image =''
-        if (req.file !== undefined) {
-            image = req.file.path
-        }
-        const {name, year, category, price} = req.body
-        const data = await models.addData({name, year, category, price, image})
-        return response(res, 200, data)
-        
-    } catch (error) {
-        res.send('Failed to Add Data')
-    }
-}
+  try {
+    console.log(req.users);
 
-movies.Update = async (req,res) => {
-    try {
-        const {name, year, category, price, image} = req.body
-        const {id} = req.params
-        const data = await models.updateData({id, name, year, category, price, image})
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
+    let image = '';
+    if (req.file !== undefined) {
+      image = req.file.path;
     }
-}
 
-movies.Delete = async (req,res) => {
-    try {
-        const {id} = req.body
-        const data = await models.deleteData(id)
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
-    }
-}
+    const { title, year } = req.body;
+    const tambah = await model.addData({ title, year, image });
+    res.send(tambah);
+  } catch (error) {
+    console.log(error);
+    res.send('Maaf error terjadi di ctrl');
+  }
+};
 
-module.exports = movies
+movies.Update = async (req, res) => {
+  try {
+    const body = req.body;
+    const tambah = await model.updateData(body);
+    res.send(tambah);
+  } catch (error) {
+    res.send('Maaf error terjadi di ctrl');
+  }
+};
+
+movies.Delete = async (req, res) => {
+  try {
+    const body = req.body;
+    const tambah = await model.deleteData(body);
+    res.send(tambah);
+  } catch (error) {
+    res.send('Maaf error terjadi di ctrl');
+  }
+};
+
+movies.Search = async (req, res) => {
+  try {
+    const par = req.query;
+    const tambah = await model.searchData(par);
+    res.send(tambah);
+  } catch (error) {
+    res.send('Can not find film!');
+  }
+};
+
+movies.ShowByNameYear = async (req, res) => {
+  try {
+    const tambah = await model.dataByNameYear();
+    res.send(tambah);
+  } catch (error) {
+    res.send('Maaf error terjadi di ctrl');
+  }
+};
+
+module.exports = movies;

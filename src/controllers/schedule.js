@@ -1,44 +1,62 @@
-const models = require('../models/schedule')
-const response = require('../helpers/response')
-const schedule = {}
+const model = require('../models/schedule');
+const schedules = {};
 
-schedule.getAll = async (req, res) => {
-    try {
-        const data = await models.getData()
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
-    }
-}
+schedules.getAll = async (req, res) => {
+  try {
+    const data = await model.getData();
+    res.send(data);
+  } catch (error) {
+    res.send('Maaf error terjadi');
+  }
+};
 
-schedule.Create = async (req, res) => {
-    try {
-        const {date, cinema, location} = req.body
-        const data = await models.addData({date, cinema, location})
-        res.send({data})
-    } catch (error) {
-        res.send('Failed to Add Data')
-    }
-}
+schedules.Create = async (req, res) => {
+  try {
+    const body = req.body;
+    const tambah = await model.addData(body);
+    res.send(body);
+  } catch (error) {
+    res.send('Maaf error terjadi di ctrl');
+  }
+};
 
-schedule.Update = async (req,res) => {
-    try {
-        const {schedule_id, date, cinema, location} = req.body
-        const data = await models.updateData(schedule_id, date, cinema, location)
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
-    }
-}
+schedules.Update = async (req, res) => {
+  try {
+    const body = req.body;
+    const tambah = await model.updateData(body);
+    res.send(body);
+  } catch (error) {
+    res.send('Maaf error terjadi di ctrl');
+  }
+};
 
-schedule.Delete = async (req,res) => {
-    try {
-        const {id} = req.body
-        const data = await models.deleteData(id)
-        return response(res, 200, data)
-    } catch (error) {
-        return response(res, 500, error)
-    }
-}
+schedules.Delete = async (req, res) => {
+  try {
+    const body = req.body;
+    const tambah = await model.deleteData(body);
+    res.send(body);
+  } catch (error) {
+    res.send('Maaf error terjadi di ctrl');
+  }
+};
 
-module.exports = schedule
+// movies.Search = async (req, res) => {
+//   try {
+//     const body = req.body;
+//     const tambah = await model.searchData(body);
+//     res.send(tambah);
+//   } catch (error) {
+//     res.send("Maaf error terjadi di ctrl");
+//   }
+// };
+
+// movies.ShowByNameYear = async (req, res) => {
+//   try {
+//     const tambah = await model.dataByNameYear();
+//     res.send(tambah);
+//   } catch (error) {
+//     res.send("Maaf error terjadi di ctrl");
+//   }
+// };
+
+module.exports = schedules;

@@ -1,17 +1,16 @@
-const express = require('express')
-const routers = express.Router()
+const express = require('express');
+const routers = express.Router();
 
-const movies = require('./movies')
-const booking = require('./booking')
-const schedule = require('./schedule')
-const users = require('./users')
-const auth = require('./auth')
+const movies = require('./movies');
+const schedules = require('./schedule');
+const booking = require('./booking');
+const users = require('./users');
+const auth = require('./auth');
 
+routers.use('/movies', movies);
+routers.use('/schedules', schedules);
+routers.use('/booking', booking);
+routers.use('/users', users);
+routers.use('/auth', auth);
 
-routers.use('/booking', booking)
-routers.use('/movies', movies)
-routers.use('/schedule', schedule)
-routers.use('/users', users)
-routers.use('/auth', auth)
-
-module.exports = routers
+module.exports = routers;
